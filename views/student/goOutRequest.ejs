@@ -1,0 +1,62 @@
+<%- include('../commonFiles/head'); -%>
+<body>
+	<%- include('../commonFiles/header'); -%>
+	<%- include('../commonFiles/navigation'); -%>
+
+	<!-- banner -->
+	<div class="main-banner-2">
+
+	</div>
+
+	<!-- page details -->
+	<div class="breadcrumb-agile bg-light py-1">
+		<ol class="breadcrumb bg-light m-0">
+			<li class="breadcrumb-item">
+				<a href="/">Home</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">외출 신청 Page</li>
+		</ol>
+	</div>
+
+	<!-- 외출신청 작성 양식 -->
+	<div class="login-contect py-1">
+		<div class="container py-xl-4 py-3">
+			<div class="login-body">
+				<h5 class="text-center mb-1">외출 신청</h5>
+				<form action="/goout/requestGoOut" method="post">
+					<div>
+						<label>기 간</label>
+						<input type="hidden" name="studentId" value="">
+					</div>
+					<div class="form-group text-center gyuti">
+						<input type="date" id="appt" name="startDay" value=<%= new Date().toLocaleDateString() %>><span class="mr-2">일</span>
+						<input type="time" id="appt" name="startTime" value="16:30">부터
+						<input type="date" id="appt" name="endDay" value=<%= new Date().toLocaleDateString() %>><span class="mr-2">일</span>
+						<input type="time" id="appt" name="endTime" value="18:30">까지
+					</div>
+					<div class="form-group">
+						<label class="mb-2">목적지</label>
+						<input type="text" class="form-control" name="place" placeholder="OO병원, OO학원 등..." required="">
+					</div>
+					<div class="form-group">
+						<label class="mb-2">사유</label>
+						<input type="text" class="form-control" name="reason" placeholder="병원치료, 학원수강 등..." required="">
+					</div>
+					<div class="form-group">
+						<label>연락처(핸드폰 번호)</label>
+						<input type="text" class="form-control" name="phoneNumber" placeholder="010-123-4567" required="">
+					</div>
+					<button type="submit" class="btn submit mb-4">승인 요청</button>
+					<p class="text-center titile-para-text">
+						By clicking button, teacher confirm your request.
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- footer -->
+	<%- include('../commonFiles/footer'); -%>
+</body>
+
+</html>

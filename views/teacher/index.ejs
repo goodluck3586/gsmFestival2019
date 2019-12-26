@@ -1,0 +1,309 @@
+<%- include('../commonFiles/head'); -%>
+<body>
+	<!-- header -->
+	<%- include('../commonFiles/header'); -%>
+	<!-- navigation -->
+	<%- include('../commonFiles/navigation'); -%>
+
+	<!-- 검색 기능 조회, 신청/수정/삭제 버튼들 -->
+	<% if(dbData === undefined) { %>
+		<div class="col-lg-12 text-center mt-lg-0 mt-4">
+			<img src="images/ab.jpg" alt="about" class="img-fluid">
+		</div>
+	<% }else{ %>
+		<form action="/teacher/search" method="post" class="row ml-1 mr-1 form-group">
+			<!-- <div class="col-lg-4 pr-xl-4 mt-xl-2 mt-lg-0">
+				<div class="input-group mb-3">
+					<select class="custom-select" id="inputGroupSelect01">
+						<option selected>학년</option>
+						<option value="1">1학년</option>
+						<option value="2">2학년</option>
+						<option value="3">3학년</option>
+					</select>
+					<select class="custom-select" id="inputGroupSelect01">
+						<option selected>반</option>
+						<option value="1">1반</option>
+						<option value="2">2반</option>
+						<option value="3">3반</option>
+						<option value="3">4반</option>
+					</select>
+					<input type="text" name="studentName" class="text-center" placeholder="이름">
+				</div>
+			</div> -->
+			<div class="col-lg-4 pr-xl-4 mt-xl-2 mt-lg-0">
+				<div class="text-center mb-2">
+					<select id="select01">
+						<option value="">구분</option>
+						<option value="">외출</option>
+						<option value="">조퇴</option>
+						<option value="">외박</option>
+					</select>
+					<select name="grade">
+						<option value="">학년</option>
+						<option value="1">1학년</option>
+						<option value="2">2학년</option>
+						<option value="3">3학년</option>
+					</select>
+					<select name="class">
+						<option value="">반</option>
+						<option value="1">1반</option>
+						<option value="2">2반</option>
+						<option value="3">3반</option>
+						<option value="4">4반</option>
+					</select>
+					<input type="text" class="text-center p-0"  name="userName" placeholder="이름">
+				</div>
+				
+			</div>
+			<div class="col-lg-4 pr-xl-4 mt-xl-2 mt-lg-0">
+				<div class="text-center"> 
+						<span>기간</span>
+						<input type="date" name="startDay" min="2019-01-01" max="2020-12-31" value="2019-03-01"> - 
+						<input type="date" name="endDay" min="2019-01-01" max="2020-12-31" value=<%= new Date().toLocaleDateString() %>>
+				</div>
+			</div>
+			<div class="col-lg-4 text-center mt-lg-0 mt-2">
+				<button type="submit" class="btn btn-outline-dark">
+					<span class="icon text-white-50"><i class="fa fa-search mr-1"></i></span>
+					<span class="text">조 회</span>
+				</button>
+				<button type="button" class="btn btn-outline-primary">
+					<span class="icon text-white-50"><i class="fa fa-check mr-1"></i></span>
+					<a href="#"  id="allowBtn"><span class="text">승 인</span></a>
+				</button>
+				<button type="button" class="btn btn-outline-danger">
+					<span class="icon text-white-50"><i class="fa fa-remove mr-1"></i></span>
+					<a href="#"  id="refuseBtn"><span class="text">거 부</span></a>
+				</button>
+			</div>
+		</form>
+
+	<!-- 외출 데이터를 표 형태로 출력 -->
+	<div class="breadcrumb-agile mt-2">
+		<table class="table text-center">
+			<thead class="thead-light">
+				<tr>
+				<th scope="col">#</th>
+				<th scope="col">학반</th>
+				<th scope="col">이름</th>
+				<th scope="col">기간</th>
+				<th scope="col">시간</th>
+				<th scope="col">사유</th>
+				<th scope="col">장소</th>
+				<th scope="col">상태</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for(var i=0; i<dbData.length; i++){ %>
+					<tr>
+						<td><input type="checkbox" name="gooutListCheckbox" value="<%= dbData[i].serialNum %>" onclick="oneCheckbox2(this)"></td>
+						<td><%= `${dbData[i].grade}-${dbData[i].class}` %></td>
+						<td><%= dbData[i].name %></td>
+						<td>
+							<span style="color:red"><%= dbData[i].leaveTime.slice(0, 10) %></span>
+							<%= dbData[i].leaveTime.slice(11, 16) %>-<%= dbData[i].comebackTime.slice(11, 16) %>
+						</td>
+						<td>3:30</td>
+						<td><%= dbData[i].reason %></td>
+						<td><%= dbData[i].place %></td>
+						<% if(dbData[i].confirm === '승인됨'){ %>
+							<td style="color:blue"><%= dbData[i].confirm %></td>
+						<% } else if(dbData[i].confirm === '거부됨'){ %>
+							<td style="color:red"><%= dbData[i].confirm %></td>
+						<% } else { %>
+							<td><%= dbData[i].confirm %></td>
+						<% } %>
+					</tr>
+				<% } %>
+			</tbody>
+		</table>
+	</div>
+	<% } %>
+	<!-- services -->
+	<section class="middle py-5" id="services">
+		<div class="container py-xl-5 py-lg-3">
+			<div class="title-section text-center mb-md-5 mb-4">
+				<p class="w3ls-title-sub">Our Work</p>
+				<h3 class="w3ls-title mb-3">Excellent <span>Services</span></h3>
+			</div>
+			<div class="row grids-w3 py-xl-5 py-lg-4 pt-lg-0 pt-4">
+				<div class="col-lg-5 w3pvt-lauits_banner_bottom_left">
+					<div class="row">
+						<div class="col-8 wthree_banner_bottom_grid_right text-right">
+							<h4 class="mb-3"><a href="/login">Free Shipping</a></h4>
+							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
+						</div>
+						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center">
+							<img src="images/s1.png" alt="" class="img-fluid">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 w3pvt-lauits_banner_bottom_left">
+
+				</div>
+				<div class="col-lg-5 w3pvt-lauits_banner_bottom_left mt-lg-0 mt-4">
+					<div class="row">
+						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center">
+							<img src="images/s2.png" alt="" class="img-fluid">
+						</div>
+						<div class="col-8 wthree_banner_bottom_grid_right">
+							<h4 class="mb-3"><a href="/login">Free & Easy Returns</a></h4>
+							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row grids-w3 py-xl-5 py-lg-4 mt-lg-0 mt-4">
+				<div class="col-lg-4 w3pvt-lauits_banner_bottom_left">
+					<div class="row">
+						<div class="col-8 wthree_banner_bottom_grid_right text-right pl-lg-0">
+							<h4 class="mb-3"><a href="/login">Online Order</a></h4>
+							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
+						</div>
+						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center pr-lg-0">
+							<img src="images/s3.png" alt="" class="img-fluid">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 w3pvt-lauits_banner_bottom_left pr-0">
+
+				</div>
+				<div class="col-lg-4 w3pvt-lauits_banner_bottom_left mt-lg-0 mt-4">
+					<div class="row">
+						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center pl-lg-0">
+							<img src="images/s4.png" alt="" class="img-fluid">
+						</div>
+						<div class="col-8 wthree_banner_bottom_grid_right pr-lg-0">
+							<h4 class="mb-3"><a href="/login">24/7 Support</a></h4>
+							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="img-blog-2">
+			<img src="images/img.png" alt="" class="img-fluid">
+		</div>
+	</section>
+	<!-- //services -->
+
+	<!-- blog -->
+	<section class="blog_w3ls py-5" id="blog">
+		<div class="container py-xl-5 py-lg-3">
+			<div class="title-section text-center mb-md-5 mb-4">
+				<p class="w3ls-title-sub">Posts</p>
+				<h3 class="w3ls-title mb-3">Our Latest <span>Blog</span></h3>
+				<p class="titile-para-text mx-auto">Inventore veritatis et quasi architecto beatae vitae dicta sunt
+					explicabo.Nemo
+					enim totam rem aperiam.</p>
+			</div>
+			<div class="row">
+				<!-- blog grid -->
+				<div class="col-lg-4 col-md-6">
+					<div class="card border-0">
+						<div class="card-header p-0">
+							<a href="/single">
+								<img src="images/blog1.png" class="card-img-bottom img-fluid" alt="image">
+							</a>
+							<img src="images/te1.jpg" alt="" class="img-blog rounded-circle img-fluid">
+						</div>
+						<div class="card-body text-center pt-5 mt-2">
+							<h5 class="blog-title card-title mb-2"><a href="/single">Sed ut Riciatis</a></h5>
+							<div class="blog_w3icon border-top border-bottom py-1 mb-3">
+								<span>
+									Magna Kictum - Nov 12</span>
+							</div>
+							<p>Cras ultricies ligula sed magna dictum porta auris blandita.</p>
+							<a href="/single" class="button-w3ls mt-4">Read More
+								<span class="fa fa-caret-right ml-1" aria-hidden="true"></span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!-- //blog grid -->
+				<!-- blog grid -->
+				<div class="col-lg-4 col-md-6">
+					<div class="card border-0">
+						<div class="card-header p-0">
+							<a href="/single">
+								<img src="images/blog2.png" class="card-img-bottom img-fluid" alt="image">
+							</a>
+							<img src="images/te2.jpg" alt="" class="img-blog rounded-circle img-fluid">
+						</div>
+						<div class="card-body text-center pt-5 mt-2">
+							<h5 class="blog-title card-title mb-2"><a href="/single">Unde omnis iste</a></h5>
+							<div class="blog_w3icon border-top border-bottom py-1 mb-3">
+								<span>
+									Auris Jlan - Nov 15</span>
+							</div>
+							<p>Cras ultricies ligula sed magna dictum porta auris blandita.</p>
+							<a href="/single" class="button-w3ls active mt-4">Read More
+								<span class="fa fa-caret-right ml-1" aria-hidden="true"></span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!-- //blog grid -->
+				<!-- blog grid -->
+				<div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
+					<div class="card border-0">
+						<div class="card-header p-0">
+							<a href="/single">
+								<img src="images/blog3.png" class="card-img-bottom img-fluid" alt="image">
+							</a>
+							<img src="images/te3.jpg" alt="" class="img-blog rounded-circle img-fluid">
+						</div>
+						<div class="card-body text-center pt-5 mt-2">
+							<h5 class="blog-title card-title mb-2"><a href="/single">Natus error sit</a></h5>
+							<div class="blog_w3icon border-top border-bottom py-1 mb-3">
+								<span>
+									Dictum Orta - Nov 20</span>
+							</div>
+							<p>Cras ultricies ligula sed magna dictum porta auris blandita.</p>
+							<a href="/single" class="button-w3ls mt-4">Read More
+								<span class="fa fa-caret-right ml-1" aria-hidden="true"></span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!-- //blog grid -->
+			</div>
+		</div>
+	</section>
+	<!-- //blog -->
+
+	<!-- slides images -->
+	<section class="wthree-slider" id="masthead">
+
+	</section>
+	<!-- //slides images -->
+
+	<!-- newsletter -->
+	<section class="subscribe-main py-5">
+		<div class="container py-xl-5 py-3">
+			<div class="row pb-lg-4 pt-lg-5">
+				<div class="col-lg-6 col-md-9 text-center">
+					<h3 class="w3ls-title mb-2">Subscribe to Newsletter</h3>
+					<p class="mb-xl-5 mb-4">Free Delivery on your first order!</p>
+					<form action="#" method="post" class="d-flex newsletter-info">
+						<input type="email" name="email" placeholder="Enter your Email..." required="">
+						<button type="submit">Submit</button>
+					</form>
+				</div>
+				<div class="col-lg-6 col-md-3">
+
+				</div>
+			</div>
+			<img src="images/sub.png" alt="" class="img-fluid sub-img">
+		</div>
+	</section>
+	<!-- //newsletter -->
+
+	<!-- footer -->
+	<%- include('../commonFiles/footer'); -%>
+	<!-- //footer -->
+
+	<!-- javascript -->
+</body>
+
+</html>

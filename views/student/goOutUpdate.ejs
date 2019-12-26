@@ -1,0 +1,62 @@
+<%- include('../commonFiles/head'); -%>
+<body>
+	<%- include('../commonFiles/header'); -%>
+	<%- include('../commonFiles/navigation'); -%>
+
+	<!-- banner -->
+	<div class="main-banner-2">
+
+	</div>
+
+	<!-- page details -->
+	<div class="breadcrumb-agile bg-light py-1">
+		<ol class="breadcrumb bg-light m-0">
+			<li class="breadcrumb-item">
+				<a href="/">Home</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">외출 신청 수정 Page</li>
+		</ol>
+	</div>
+
+	<!-- 외출신청 작성 양식 -->
+	<div class="login-contect py-1">
+		<div class="container py-xl-4 py-3">
+			<div class="login-body">
+				<h5 class="text-center mb-1">외출 신청 수정</h5>
+				<form action="/goout/updateGoOut" method="post">
+					<div>
+						<label>기 간</label>
+						<input type="hidden" name="serialNum" value=<%= results.serialNum %>>
+					</div>
+					<div class="form-group text-center gyuti">
+						<input type="date" id="appt" name="startDay" value=<%= results.leaveTime.slice(0, 10) %>><span class="mr-2">일</span>
+						<input type="time" id="appt" name="startTime" value=<%= results.leaveTime.slice(11, 16) %>>부터
+						<input type="date" id="appt" name="endDay" value=<%= results.comebackTime.slice(0, 10) %>><span class="mr-2">일</span>
+						<input type="time" id="appt" name="endTime" value=<%= results.comebackTime.slice(11, 16) %>>까지
+					</div>
+					<div class="form-group">
+						<label class="mb-2">목적지</label>
+						<input type="text" class="form-control" name="place" placeholder="OO병원, OO학원 등..." required="" value=<%= results.place %>>
+					</div>
+					<div class="form-group">
+						<label class="mb-2">사유</label>
+						<input type="text" class="form-control" name="reason" placeholder="병원치료, 학원수강 등..." required="" value=<%= results.reason %>>
+					</div>
+					<div class="form-group">
+						<label>연락처(핸드폰 번호)</label>
+						<input type="text" class="form-control" name="phoneNumber" placeholder="010-123-4567" required="" value=<%= results.phoneNum %>>
+					</div>
+					<button type="submit" class="btn submit mb-4">수 정</button>
+					<p class="text-center titile-para-text">
+						By clicking button, teacher confirm your request.
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- footer -->
+	<%- include('../commonFiles/footer'); -%>
+</body>
+
+</html>
