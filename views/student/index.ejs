@@ -8,13 +8,13 @@
 	<!-- 외출 날짜 조회, 신청/수정/삭제 버튼들 -->
 	<% if(dbData === undefined) { %>
 		<div class="col-lg-12 text-center mt-lg-0 mt-4">
-			<img src="images/ab.jpg" alt="about" class="img-fluid">
+			<img src="/images/ab.jpg" alt="about" class="img-fluid">
 		</div>
 	<% }else{ %>
 	<div class="row ">
 		<div class="col-lg-6 pr-xl-5 mt-xl-2 mt-lg-0">
 			<div class="text-center"> 
-				<form action="#" method="post">
+				<form action="/goout/search" method="post">
 					<input type="date" name="startDay" min="2019-01-01" max="2020-12-31" value="2019-03-01"> - 
 					<input type="date" name="endDay" min="2019-01-01" max="2020-12-31" value=<%= new Date().toLocaleDateString() %>>
 					<button type="submit" class="btn btn-secondary btn-sm">조 회</button>
@@ -54,13 +54,25 @@
 			<tbody>
 				<% for(var i=0; i<dbData.length; i++){ %>
 					<tr>
-						<td><input type="checkbox" name="gooutListCheckbox" value="<%= dbData[i].serialNum %>" onclick="oneCheckbox(this)"></td>
+						<% if(dbData[i].confirm === '승인됨'){ %>
+							<td><input type="checkbox" disabled="disabled" id="checkBox"/></td>
+						<% } else { %>
+							<td><input type="checkbox" name="gooutListCheckbox" value="<%= dbData[i].serialNum %>" onclick="oneCheckbox(this)"></td>
+						<% } %>
 						<td>외출</td>
 						<td>
-							<span style="color:red"><%= dbData[i].leaveTime.slice(0, 10) %></span>
-							<%= dbData[i].leaveTime.slice(11, 16) %>-<%= dbData[i].comebackTime.slice(11, 16) %>
+							<span style="color:red"><%= dbData[i].leaveTime.slice(5, 10) %></span>
+							<span><%= dbData[i].leaveTime.slice(11, 16) %> -</span>
+							<span style="color:red"><%= dbData[i].comebackTime.slice(5, 10) %></span>
+							<span><%= dbData[i].comebackTime.slice(11, 16) %></span>
 						</td>
-						<td>3:30</td>
+						<td>
+							<% var hour = Math.floor((new Date(dbData[i].comebackTime.slice(0, 19)).getTime() - new Date(dbData[i].leaveTime.slice(0, 19)).getTime())/(1000*60*60)) %>
+							<% var minute = (new Date(dbData[i].comebackTime.slice(0, 19)).getTime() - new Date(dbData[i].leaveTime.slice(0, 19)).getTime())/(1000*60*60)%1*60 %>
+							<% minute = (minute > 9) ? minute : '0'+minute %>
+							<span><%= hour %>:</span>
+							<span><%= minute %></span>
+						</td>
 						<td><%= dbData[i].reason %></td>
 						<td><%= dbData[i].place %></td>
 						<% if(dbData[i].confirm === '승인됨'){ %>
@@ -91,7 +103,7 @@
 							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
 						</div>
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center">
-							<img src="images/s1.png" alt="" class="img-fluid">
+							<img src="/images/s1.png" alt="" class="img-fluid">
 						</div>
 					</div>
 				</div>
@@ -101,7 +113,7 @@
 				<div class="col-lg-5 w3pvt-lauits_banner_bottom_left mt-lg-0 mt-4">
 					<div class="row">
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center">
-							<img src="images/s2.png" alt="" class="img-fluid">
+							<img src="/images/s2.png" alt="" class="img-fluid">
 						</div>
 						<div class="col-8 wthree_banner_bottom_grid_right">
 							<h4 class="mb-3"><a href="/login">Free & Easy Returns</a></h4>
@@ -118,7 +130,7 @@
 							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
 						</div>
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center pr-lg-0">
-							<img src="images/s3.png" alt="" class="img-fluid">
+							<img src="/images/s3.png" alt="" class="img-fluid">
 						</div>
 					</div>
 				</div>
@@ -128,7 +140,7 @@
 				<div class="col-lg-4 w3pvt-lauits_banner_bottom_left mt-lg-0 mt-4">
 					<div class="row">
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center pl-lg-0">
-							<img src="images/s4.png" alt="" class="img-fluid">
+							<img src="/images/s4.png" alt="" class="img-fluid">
 						</div>
 						<div class="col-8 wthree_banner_bottom_grid_right pr-lg-0">
 							<h4 class="mb-3"><a href="/login">24/7 Support</a></h4>
@@ -139,7 +151,7 @@
 			</div>
 		</div>
 		<div class="img-blog-2">
-			<img src="images/img.png" alt="" class="img-fluid">
+			<img src="/images/img.png" alt="" class="img-fluid">
 		</div>
 	</section>
 	<!-- //services -->
@@ -160,9 +172,9 @@
 					<div class="card border-0">
 						<div class="card-header p-0">
 							<a href="/single">
-								<img src="images/blog1.png" class="card-img-bottom img-fluid" alt="image">
+								<img src="/images/blog1.png" class="card-img-bottom img-fluid" alt="image">
 							</a>
-							<img src="images/te1.jpg" alt="" class="img-blog rounded-circle img-fluid">
+							<img src="/images/te1.jpg" alt="" class="img-blog rounded-circle img-fluid">
 						</div>
 						<div class="card-body text-center pt-5 mt-2">
 							<h5 class="blog-title card-title mb-2"><a href="/single">Sed ut Riciatis</a></h5>
@@ -183,9 +195,9 @@
 					<div class="card border-0">
 						<div class="card-header p-0">
 							<a href="/single">
-								<img src="images/blog2.png" class="card-img-bottom img-fluid" alt="image">
+								<img src="/images/blog2.png" class="card-img-bottom img-fluid" alt="image">
 							</a>
-							<img src="images/te2.jpg" alt="" class="img-blog rounded-circle img-fluid">
+							<img src="/images/te2.jpg" alt="" class="img-blog rounded-circle img-fluid">
 						</div>
 						<div class="card-body text-center pt-5 mt-2">
 							<h5 class="blog-title card-title mb-2"><a href="/single">Unde omnis iste</a></h5>
@@ -206,9 +218,9 @@
 					<div class="card border-0">
 						<div class="card-header p-0">
 							<a href="/single">
-								<img src="images/blog3.png" class="card-img-bottom img-fluid" alt="image">
+								<img src="/images/blog3.png" class="card-img-bottom img-fluid" alt="image">
 							</a>
-							<img src="images/te3.jpg" alt="" class="img-blog rounded-circle img-fluid">
+							<img src="/images/te3.jpg" alt="" class="img-blog rounded-circle img-fluid">
 						</div>
 						<div class="card-body text-center pt-5 mt-2">
 							<h5 class="blog-title card-title mb-2"><a href="/single">Natus error sit</a></h5>
@@ -251,7 +263,7 @@
 
 				</div>
 			</div>
-			<img src="images/sub.png" alt="" class="img-fluid sub-img">
+			<img src="/images/sub.png" alt="" class="img-fluid sub-img">
 		</div>
 	</section>
 	<!-- //newsletter -->

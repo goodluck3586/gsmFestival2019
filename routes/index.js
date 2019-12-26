@@ -13,11 +13,10 @@ router.get('/', function(req, res, next) {
     }else{
       res.redirect('/');
     }
-    
   }else{
     console.log('req.session.userId 없음');
     model.selectStudentsData(function(results){
-      res.render('index', { title: 'GSM 외출관리', isOwner: auth.isOwner(req, res), dbData: undefined });
+      res.render('index', { title: 'GSM 외출관리', isOwner: auth.isOwner(req, res)});
     });
   }
 });

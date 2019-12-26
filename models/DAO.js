@@ -51,6 +51,35 @@ exports.selectGoOutDataWithUserId = function(memberId, cb){
   });
 }
 
+// SELECT(개인별 외출 현황 데이터)
+exports.selectGoOutData = function(conditions, cb){
+  var sql = "";
+
+  if(conditions != undefined){
+    if(conditions.length === 1){
+      sql = `SELECT * FROM gooutmanagement WHERE ${conditions[0]} ORDER BY requestTime DESC`;
+    }else{
+      var str=""
+      for(var i=0; i<conditions.length-1; i++){
+        str += conditions[i]+' and '
+      }
+      str += conditions[conditions.length-1];
+      sql = `SELECT * FROM gooutmanagement WHERE ${str} ORDER BY requestTime DESC`;
+    }
+  }else{
+    sql = `SELECT * FROM gooutmanagement ORDER BY requestTime DESC`;
+  }
+  
+    console.log(`완성된 sql문장: ${sql} `)
+    connection.query(sql, function (error, results, fields) {
+      if(!error){
+        cb(results);
+      }else{
+        console.log(error);
+      }
+    });
+  }
+
 // 외출 요청 데이터를 DB에 추가하고 index.ejs로 redirect
 exports.insertRequest = function(values, cb){
   // values = [`id`, `name`, `grade`, `class`, `date`, `startDay+startTime`, `endDay_endTime`, `place`, `reason`, `phoneNumber`];

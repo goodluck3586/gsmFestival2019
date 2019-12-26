@@ -26,8 +26,10 @@ function oneCheckbox2(selectedCheckBox){
         }
         document.getElementById("allowBtn").setAttribute('href', '/teacher/allow/'+selectedCheckBox.value);
         document.getElementById("refuseBtn").setAttribute('href', '/teacher/refuse/'+selectedCheckBox.value);
+        document.getElementById("deleteBtn").setAttribute('href', '/teacher/delete/'+selectedCheckBox.value);
     }else{
         document.getElementById("allowBtn").setAttribute('href', '#');
         document.getElementById("refuseBtn").setAttribute('href', '#');
+        document.getElementById("deleteBtn").setAttribute('href', '#');
     }
 }

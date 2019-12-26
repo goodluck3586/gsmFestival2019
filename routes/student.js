@@ -22,10 +22,53 @@ router.get('/requestGoOut', function(req, res, next){
 
 // 외출 데이터 전송
 router.post('/requestGoOut', function(req, res, next){
-  values = [req.session.userId, req.session.userName, req.session.grade, req.session.class, req.body.startDay, `${req.body.startDay} ${req.body.startTime}`, `${req.body.endDay} ${req.body.endTime}`, req.body.place, req.body.reason, req.body.phoneNumber];
-  model.insertRequest(values, function(){
-    res.redirect('/goout')
-  })
+  if(auth.isOwner(req, res).isLogin){
+    values = [req.session.userId, req.session.userName, req.session.grade, req.session.class, req.body.startDay, `${req.body.startDay} ${req.body.startTime}`, `${req.body.endDay} ${req.body.endTime}`, req.body.place, req.body.reason, req.body.phoneNumber];
+    model.insertRequest(values, function(){
+      res.redirect('/goout')
+    })
+  }else{
+    res.redirect('/')
+  }
+})
+
+// 조회버튼 클릭
+router.post('/search', function(req, res, next){
+  console.log('req.session')
+  for(var key in req.session)
+    console.log(`key: ${key}, value: ${req.session[key]}`)
+  console.log('req.body')
+  for(var key in req.body)
+    console.log(`key: ${key}, value: ${req.body[key]}`)
+
+  if(req.session.userId && req.session.userType === 'student'){
+    conditions = [];
+    condition_date = "";
+    if(req.body){
+      // id 쿼리 조건 작성
+      if(req.body.userName != "")
+        conditions.push(`id='${req.session.userId}'`)
+
+      // 검색 날짜 쿼리 작성
+      if(req.body.startDay!="" && req.body.endDay!="")
+        condition_date = `date>='${req.body.startDay}' and date<='${req.body.endDay}'`;
+      else if(req.body.startDay!="" || req.body.endDay!=""){
+        if (req.body.startDay!="")
+          condition_date = `date>='${req.body.startDay}'`;
+        else
+          condition_date = `date<='${req.body.endDay}'`;
+      }else{
+        condition_date = `date>='2019-03-01' and date<='2019-12-31'`;
+      }
+      conditions.push(condition_date);
+    }
+
+    model.selectGoOutData(conditions, function(results){
+      res.render('student/index', { title: 'GSM Teacher', isOwner: auth.isOwner(req, res), dbData: results })
+    });
+  }else{
+    res.redirect('/');
+  }
 })
 
 // 체크박스로 선택한 외출 데이터 수정 요청

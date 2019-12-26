@@ -5,71 +5,11 @@
 	<!-- navigation -->
 	<%- include('commonFiles/navigation'); -%>
 
-	<!-- 외출 날짜 조회, 신청/수정/삭제 버튼들 -->
-	<% if(dbData === undefined) { %>
-		<div class="col-lg-12 text-center mt-lg-0 mt-4">
-			<img src="images/ab.jpg" alt="about" class="img-fluid">
-		</div>
-	<% }else{ %>
-	<div class="row ">
-		<div class="col-lg-6 pr-xl-5 mt-xl-2 mt-lg-0">
-			<div class="text-center"> 
-				<form action="#" method="post">
-					<input type="date" name="startDay" min="2019-01-01" max="2020-12-31" value="2019-03-01"> - 
-					<input type="date" name="endDay" min="2019-01-01" max="2020-12-31" value=<%= new Date().toLocaleDateString() %>>
-					<button type="submit" class="btn btn-secondary btn-sm">조 회</button>
-				</form>
-				<p class="titile-para-text mx-auto">메인 페이지.</p>
-			</div>
-		</div>
-		<div class="col-lg-6 text-center mt-lg-0 mt-4">
-			<a href="/requestGoOut" class="btn btn-outline-dark btn-icon-split">
-				<span class="icon text-white-50"><i class="fa fa-flag mr-1"></i></span>
-				<span class="text">신 청</span>
-			  </a>
-			  <a href="#" class="btn btn-outline-dark btn-icon-split" id="updateBtn">
-				<span class="icon text-white-50"><i class="fa fa-film mr-1"></i></span>
-				<span class="text">수 정</span>
-			  </a>
-			<a href="#" class="btn btn-outline-danger btn-icon-split" id="deleteBtn">
-				<span class="icon text-white-50"><i class="fa fa-remove mr-1"></i></span>
-				<span class="text">삭 제</span>
-			  </a>
-		</div>
+	<!-- IU Image -->
+	<div class="col-lg-12 text-center mt-lg-0 mt-4">
+		<img src="/images/ab.jpg" alt="about" class="img-fluid">
 	</div>
-
-	<div class="main-banner-1 mt-2">
-		<table class="table text-center">
-			<thead class="thead-light">
-				<tr>
-				<th scope="col">#</th>
-				<th scope="col">종류</th>
-				<th scope="col">기간</th>
-				<th scope="col">시간</th>
-				<th scope="col">사유</th>
-				<th scope="col">장소</th>
-				<th scope="col">상태</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% for(var i=0; i<dbData.length; i++){ %>
-					<tr>
-						<td><input type="checkbox" name="gooutListCheckbox" value="<%= dbData[i].serialNum %>" onclick="oneCheckbox(this)"></td>
-						<td>외출</td>
-						<td>
-							<span style="color:red"><%= dbData[i].leaveTime.slice(0, 10) %></span>
-							<%= dbData[i].leaveTime.slice(11, 16) %>-<%= dbData[i].comebackTime.slice(11, 16) %>
-						</td>
-						<td>3:30</td>
-						<td><%= dbData[i].reason %></td>
-						<td><%= dbData[i].place %></td>
-						<td><%= dbData[i].confirm %></td>
-					</tr>
-				<% } %>
-			</tbody>
-		</table>
-	</div>
-	<% } %>
+	
 	<!-- services -->
 	<section class="middle py-5" id="services">
 		<div class="container py-xl-5 py-lg-3">
@@ -85,7 +25,7 @@
 							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
 						</div>
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center">
-							<img src="images/s1.png" alt="" class="img-fluid">
+							<img src="/images/s1.png" alt="" class="img-fluid">
 						</div>
 					</div>
 				</div>
@@ -95,7 +35,7 @@
 				<div class="col-lg-5 w3pvt-lauits_banner_bottom_left mt-lg-0 mt-4">
 					<div class="row">
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center">
-							<img src="images/s2.png" alt="" class="img-fluid">
+							<img src="/images/s2.png" alt="" class="img-fluid">
 						</div>
 						<div class="col-8 wthree_banner_bottom_grid_right">
 							<h4 class="mb-3"><a href="/login">Free & Easy Returns</a></h4>
@@ -112,7 +52,7 @@
 							<p>Morbi viverra lacus commodo felis semper lectus feugiat.</p>
 						</div>
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center pr-lg-0">
-							<img src="images/s3.png" alt="" class="img-fluid">
+							<img src="/images/s3.png" alt="" class="img-fluid">
 						</div>
 					</div>
 				</div>
@@ -122,7 +62,7 @@
 				<div class="col-lg-4 w3pvt-lauits_banner_bottom_left mt-lg-0 mt-4">
 					<div class="row">
 						<div class="col-4 wthree_banner_bottom_grid_left text-lg-right text-center pl-lg-0">
-							<img src="images/s4.png" alt="" class="img-fluid">
+							<img src="/images/s4.png" alt="" class="img-fluid">
 						</div>
 						<div class="col-8 wthree_banner_bottom_grid_right pr-lg-0">
 							<h4 class="mb-3"><a href="/login">24/7 Support</a></h4>
@@ -133,7 +73,7 @@
 			</div>
 		</div>
 		<div class="img-blog-2">
-			<img src="images/img.png" alt="" class="img-fluid">
+			<img src="/images/img.png" alt="" class="img-fluid">
 		</div>
 	</section>
 	<!-- //services -->
@@ -154,9 +94,9 @@
 					<div class="card border-0">
 						<div class="card-header p-0">
 							<a href="/single">
-								<img src="images/blog1.png" class="card-img-bottom img-fluid" alt="image">
+								<img src="/images/blog1.png" class="card-img-bottom img-fluid" alt="image">
 							</a>
-							<img src="images/te1.jpg" alt="" class="img-blog rounded-circle img-fluid">
+							<img src="/images/te1.jpg" alt="" class="img-blog rounded-circle img-fluid">
 						</div>
 						<div class="card-body text-center pt-5 mt-2">
 							<h5 class="blog-title card-title mb-2"><a href="/single">Sed ut Riciatis</a></h5>
@@ -177,9 +117,9 @@
 					<div class="card border-0">
 						<div class="card-header p-0">
 							<a href="/single">
-								<img src="images/blog2.png" class="card-img-bottom img-fluid" alt="image">
+								<img src="/images/blog2.png" class="card-img-bottom img-fluid" alt="image">
 							</a>
-							<img src="images/te2.jpg" alt="" class="img-blog rounded-circle img-fluid">
+							<img src="/images/te2.jpg" alt="" class="img-blog rounded-circle img-fluid">
 						</div>
 						<div class="card-body text-center pt-5 mt-2">
 							<h5 class="blog-title card-title mb-2"><a href="/single">Unde omnis iste</a></h5>
@@ -200,9 +140,9 @@
 					<div class="card border-0">
 						<div class="card-header p-0">
 							<a href="/single">
-								<img src="images/blog3.png" class="card-img-bottom img-fluid" alt="image">
+								<img src="/images/blog3.png" class="card-img-bottom img-fluid" alt="image">
 							</a>
-							<img src="images/te3.jpg" alt="" class="img-blog rounded-circle img-fluid">
+							<img src="/images/te3.jpg" alt="" class="img-blog rounded-circle img-fluid">
 						</div>
 						<div class="card-body text-center pt-5 mt-2">
 							<h5 class="blog-title card-title mb-2"><a href="/single">Natus error sit</a></h5>
@@ -245,7 +185,7 @@
 
 				</div>
 			</div>
-			<img src="images/sub.png" alt="" class="img-fluid sub-img">
+			<img src="/images/sub.png" alt="" class="img-fluid sub-img">
 		</div>
 	</section>
 	<!-- //newsletter -->

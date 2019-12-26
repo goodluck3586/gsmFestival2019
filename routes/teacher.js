@@ -18,7 +18,6 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/search', function(req, res, next){
-  console.log('/search 라우팅 실행됨.')
   console.log('req.session')
   for(var key in req.session)
     console.log(`key: ${key}, value: ${req.session[key]}`)
@@ -86,7 +85,12 @@ router.get('/refuse/:serialNum', function(req, res, next){
   })
 })
 
-
+// 체크박스로 선택한 외출 데이터 삭제 요청
+router.get('/delete/:serialNum', function(req, res, next){
+  model.deleteGoOutDataWithSerialNum(req.params.serialNum, function(){
+    res.redirect('/teacher')
+  })
+})
 
 
 

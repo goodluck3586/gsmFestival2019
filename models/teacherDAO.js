@@ -62,3 +62,15 @@ exports.selectGoOutData = function(conditions, cb){
       }
     })
   }
+
+// DELETE (선택된 외출 데이터 삭제)
+exports.deleteGoOutDataWithSerialNum = function(serialNum, cb){
+  sql = 'DELETE FROM `gooutmanagement` WHERE `serialNum` = ?';
+  connection.query(sql, [serialNum], function(error, results, fields){
+    if(!error){
+      cb();
+    }else{
+      console.log(error);
+    }
+  })
+}
