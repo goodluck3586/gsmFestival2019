@@ -26,8 +26,8 @@ exports.loginProcess = function(formData, cb){
     sql = 'SELECT * FROM member WHERE id = ?';
     connection.query(sql, [formData.email], function(err, results, fields){
         if(!err){
-          console.log('loginProcess select data');
-          console.log(results[0]);
+          //console.log('loginProcess select data');
+          //console.log(results[0]);
           cb(results[0]);     // 검색된 row 하나만 리턴{id:, pwd:, name:, class:}
         }else{
           console.log('loginProcess 에러 발생');

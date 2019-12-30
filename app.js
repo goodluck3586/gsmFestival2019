@@ -13,7 +13,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// routing
+// routing modules
 var indexRouter = require('./routes/index');
 var studentRouter = require('./routes/student');
 var teacherRouter = require('./routes/teacher');
