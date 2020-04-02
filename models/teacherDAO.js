@@ -1,12 +1,21 @@
 var mysql      = require('mysql');
 
-// Mysql 연결 connection 객체 생성
+// // Mysql 연결 connection 객체 생성
+// var connection = mysql.createConnection({
+//     host     : 'localhost',
+//     user     : 'root',
+//     password : '1111',
+//     database : 'gooutmanagement',
+//     dateStrings : true,
+// });
+
+// AWS RDS
 var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '1111',
-    database : 'gooutmanagement',
-    dateStrings : true,
+  host     : 'gsm2020db.cjcmqryrdudw.ap-northeast-2.rds.amazonaws.com',
+  user     : 'goodluck3586',
+  database : 'gooutmanagement',
+  password : 'Ldy73024756$$',
+  dateStrings : true,
 });
 
 // SELECT(개인별 외출 현황 데이터)

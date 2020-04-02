@@ -81,6 +81,10 @@ router.get('/logout', function(req, res, next){
     res.redirect('/');
 });
 });
+
+router.get('/changePwd', function(req, res, next){
+  res.render('changePwd', {title: 'Change pwd', isOwner: auth.isOwner(req, res)})
+})
 // #endregion 
 
 

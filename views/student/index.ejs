@@ -16,7 +16,7 @@
 			<div class="text-center"> 
 				<form action="/goout/search" method="post">
 					<input type="date" name="startDay" min="2019-01-01" max="2020-12-31" value="2019-03-01"> - 
-					<input type="date" name="endDay" min="2019-01-01" max="2020-12-31" value=<%= new Date().toLocaleDateString() %>>
+					<input type="date" name="endDay" min="2019-01-01" max="2020-12-31" value=<%= new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>>
 					<button type="submit" class="btn btn-secondary btn-sm">조 회</button>
 				</form>
 				<p class="titile-para-text mx-auto">담임 선생님께 허락받음 → 외출 신청 → 승인 받으세요.</p>

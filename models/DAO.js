@@ -9,6 +9,15 @@ var connection = mysql.createConnection({
     dateStrings : true,
 });
 
+// // AWS RDS
+// var connection = mysql.createConnection({
+//   host     : 'gsm2020db.cjcmqryrdudw.ap-northeast-2.rds.amazonaws.com',
+//   user     : 'goodluck3586',
+//   database : 'gooutmanagement',
+//   password : 'Ldy73024756$$',
+//   dateStrings : true,
+// });
+
 //#region ##########[msmber table]##########
 // member 테이블 데이터 가져오기
 exports.selectStudentsData = function(cb){
